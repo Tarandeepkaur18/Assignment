@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Taran</string>
+    <string name="enter_first_name">enter first name</string>
+    <string name="enter_last_name">enter last name</string>
+    <string name="enter_email">enter email</string>
+    <string name="enter_password">enter password</string>
+    <string name="enter_phone">enter phone number</string>
+    <string name="enter_valid_password">enter valid password</string>
+    <string name="enter_valid_email">enter valid email</string>
+    <string name="short_password">short password</string>
+    <string name="password_not_matched">password not matched</string>
+    <string name="invalid_phn">invalid phone</string>
+</resources>

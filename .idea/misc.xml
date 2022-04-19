@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/drawable/button.xml" value="0.1945" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_account.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_example_splash_activty.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_main2.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/layout/activity_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Taran/app/src/main/res/menu/menu.xml" value="0.20416666666666666" />

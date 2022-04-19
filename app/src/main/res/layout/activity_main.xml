@@ -11,44 +11,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/email"
-            android:hint="enter email">
+            android:hint="enter name">
 
         </EditText>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/password"
-            android:hint="enter password">
+            android:hint="enter email">
 
         </EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone"
+            android:hint="enter phone">
+
+        </EditText>
+
+
+
+
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn"
-            android:text="Login">
+            android:id="@+id/btngallery"
+            android:text="upload photo">
 
         </Button>
-        <Button
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/img"
+            android:src="@color/purple_200"
+            android:layout_gravity="center">
+
+        </ImageView>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/googlebtn"
-            android:text="Login with google">
-
-        </Button>
-        <Button
+            android:text="add number plate"
+            android:id="@+id/plate"/>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/createbtn"
-            android:text="Create an account">
-
-        </Button>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnPermission"
-            android:text="Grant an permission">
-
-        </Button>
-
+android:text="insurance number"
+            android:id="@+id/insurance"/>
     </LinearLayout>
 </layout>

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.taran.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,11 +23,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 class MainActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var binding: ActivityMainBinding
     private lateinit var googleSignInClient: GoogleSignInClient
+    var storageRef = FirebaseStorage.getInstance().reference
     val database = Firebase.database
     val requestPermissionLauncher =
         registerForActivityResult(
@@ -42,6 +45,42 @@ class MainActivity : AppCompatActivity() {
                 // settings in an effort to convince the user to change their
                 // decision.
             }
+        }
+    val requestMultiplePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            var isShowPermissionDialog = false
+
+            for (mapValue in it) {
+                if(!mapValue.value){
+                    isShowPermissionDialog = true
+                }
+            }
+            if (isShowPermissionDialog)
+            {
+                //alert
+            }
+        }
+
+val imagePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) {
+            it?.let {
+                binding.img.setImageURI(it)
+                Glide.with(this).load(it).into(binding.img)
+                var task = storageRef.child("/taran").child(System.currentTimeMillis().toString()).putFile(it)
+task.addOnFailureListener { 
+    Log.e(TAG, "in on failure ${it.toString()}")
+    Toast.makeText(this@MainActivity,it.toString(), Toast.LENGTH_SHORT).show()
+}
+                task.addOnSuccessListener {
+    Log.e(TAG, "in on success ${it.toString()}")
+    Toast.makeText(this@MainActivity,it.toString(), Toast.LENGTH_SHORT).show()
+}
+            }
+
         }
 
 
@@ -74,25 +113,31 @@ class MainActivity : AppCompatActivity() {
 
 
         //end of permission
+        binding.btngallery.setOnClickListener{
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED &&  ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_CONTACTS
+                ) == PackageManager.PERMISSION_GRANTED-> {
+                    // You can use the API that requires the permission.
+                    imagePermissionLauncher.launch("image/*")
+                }
 
-
-        binding.btn.setOnClickListener {
-            if(binding.email.text.toString().isNullOrEmpty()){
-                return@setOnClickListener
+                else -> {
+                    // You can directly ask for the permission.
+                    // The registered ActivityResultCallback gets the result of this request.
+                    requestMultiplePermissionLauncher.launch(
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_CONTACTS))
+                }
             }
-            if(binding.password.text.toString().isNullOrEmpty()){
-                return@setOnClickListener
-            }
-            createAccount(binding.email.text.toString(), binding.password.text.toString())
 
         }
-        binding.googlebtn.setOnClickListener {
-            signIn()
-        }
-        binding.createbtn.setOnClickListener {
-            val intent = Intent(this@MainActivity, MainActivity2::class.java)
-            startActivity(intent)
-        }
+
+
+
 
 
 
@@ -103,19 +148,24 @@ class MainActivity : AppCompatActivity() {
 
         myRef.setValue(user!!.email)
         startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
-        this.finish()
+//        this.finish()
     }
 
     // [START on_start_check_user]
+    //for splash screen use this function from onstart()
     public override fun onStart() {
         super.onStart()
+
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+       // Handler(Looper.getMainLooper().postDelayed({
+       /* val currentUser = auth.currentUser
         if(currentUser != null){
             Log.e(TAG, " current user name ${currentUser.email}")
-            startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
-            this.finish()
-        }
+            (not write in splash screen)startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
+            (not write)this.finish()
+        }*/
+        //}
+        //else{move to login}}, delayMillis:2000)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
